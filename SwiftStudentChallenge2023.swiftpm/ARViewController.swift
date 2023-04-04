@@ -11,23 +11,28 @@ import ARKit
 
 class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     //MARK: - Properties
-    let testView: UIView = {
-       let view = UIView()
-        view.backgroundColor = .red
-        return view
+    lazy var sceneView: ARSCNView = {
+        let scene = ARSCNView()
+        scene.delegate = self
+        scene.session.delegate = self
+        scene.showsStatistics = false
+        
+        return scene
     }()
+    
+    let configuration = ARWorldTrackingConfiguration()
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(testView)
+        self.view.addSubview(sceneView)
         
         NSLayoutConstraint.activate([
-            testView.topAnchor.constraint(equalTo: view.topAnchor),
-            testView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            testView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            testView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            sceneView.topAnchor.constraint(equalTo: view.topAnchor),
+            sceneView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            sceneView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            sceneView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         view.subviews.forEach {
@@ -37,6 +42,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        configuration.planeDetection = .horizontal
+        configuration.isLightEstimationEnabled = true
+        
+        sceneView.session.run(configuration)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,6 +55,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     //MARK: - Scene Function
+    
+    
     
 }
 
