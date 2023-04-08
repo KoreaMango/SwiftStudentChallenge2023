@@ -9,6 +9,4 @@ import Foundation
 
 class Game: ObservableObject {
     @Published var score: Int = 0
-    
-    
 }

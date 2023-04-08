@@ -38,7 +38,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
                                                    width: UIScreen.main.bounds.width,
                                                    height: 100))
     
-    // ARSession에
+    // ARSession에 적용할 월드 트래킹 설정
     let configuration = ARWorldTrackingConfiguration()
     
     //MARK: - Life Cycle
@@ -73,9 +73,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //
+        // configuration 세부 설정
         configuration.planeDetection = .horizontal
         configuration.isLightEstimationEnabled = true
+        
+        // config 적용후 실행
         sceneView.session.run(configuration)
         
         score = 0
