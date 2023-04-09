@@ -93,6 +93,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     }
     
     //MARK: - Scene Function
+    // 항아리 만들기
     func makeJar() -> SCNNode {
         let jarNode = SCNNode()
 
@@ -117,6 +118,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         return jarNode
     }
     
+    // 항아리 밑면
     func makeUnderJar() -> SCNNode {
         let underJarNode = SCNNode()
         
@@ -139,6 +141,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         return underJarNode
     }
     
+    // 화살
     func makeArrow() -> SCNNode {
         // 1
         let arrowNode = SCNNode()
