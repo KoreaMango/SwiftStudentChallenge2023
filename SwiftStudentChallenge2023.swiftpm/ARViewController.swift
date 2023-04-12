@@ -102,9 +102,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         let jarOut = SCNTube(innerRadius: 0.08, outerRadius: 0.10, height: 0.25)
         
+        let shape = SCNPhysicsShape(geometry: jarOut,
+                                    options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron])
+        
         let jarPhysicsBody = SCNPhysicsBody(
             type: .static,
-            shape: SCNPhysicsShape(geometry:  SCNTube(innerRadius: 0.08, outerRadius: 0.10, height: 0.25))
+            shape: shape
         )
         
         outMaterial.diffuse.contents = UIImage(named: "TreeTexture")
