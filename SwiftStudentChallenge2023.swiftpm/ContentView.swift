@@ -1,9 +1,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    @StateObject var game = Game()
-    
     var body: some View {
         ZStack {
             ARVCRepresentable()

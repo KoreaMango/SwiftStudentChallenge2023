@@ -32,7 +32,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         didSet {
             DispatchQueue.main.async { [unowned self] in
                 self.scoreLabel.text = "\(self.score)"
-                
             }
         }
     }
@@ -52,18 +51,20 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         guard let nodeNameA = contact.nodeA.name else { return }
         guard let nodeNameB = contact.nodeB.name else { return }
         
-        var arrowJarContactNode: SCNNode?
+        var jarContactNode: SCNNode?
+        var arrowContactNode: SCNNode?
         
         if nodeNameA == "underJar" && nodeNameB == "arrow" {
-            arrowJarContactNode = contact.nodeA
-        } else if nodeNameB == "arrow" && nodeNameA == "underJar" {
-            arrowJarContactNode = contact.nodeB
+            jarContactNode = contact.nodeA
+            arrowContactNode = contact.nodeB
         }
-        
-        if let arrowNode = arrowJarContactNode {
+                
+        if let arrowNode = arrowContactNode {
             arrowNode.runAction(
                 SCNAction.run({ node in
-                    print("충돌")
+                    print("arrow",node)
+                    
+                    node.isPaused = true
                 })
             )
         }
