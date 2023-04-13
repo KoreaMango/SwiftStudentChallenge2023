@@ -10,13 +10,18 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UIGestureRecognizerDelegate {
+// Categories
+let arrowCategory        : Int = 0x1 << 0
+let jarCategory          : Int = 0x1 << 1
+
+class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UIGestureRecognizerDelegate, SCNPhysicsContactDelegate {
     //MARK: - Properties
     // AR Scene View
     lazy var sceneView: ARSCNView = {
         let scene = ARSCNView()
         scene.delegate = self
         scene.session.delegate = self
+        scene.scene.physicsWorld.contactDelegate = self
         scene.showsStatistics = false
         
         return scene
@@ -24,13 +29,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     
     // 투호 점수
     private var score: UInt = 0 {
-           didSet {
-               DispatchQueue.main.async { [unowned self] in
-                   self.scoreLabel.text = "\(self.score)"
-                   
-               }
-           }
-       }
+        didSet {
+            DispatchQueue.main.async { [unowned self] in
+                self.scoreLabel.text = "\(self.score)"
+                
+            }
+        }
+    }
     
     // 점수 Label
     private let scoreLabel = UILabel(frame: CGRect(x: 0,
@@ -40,6 +45,29 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     
     // ARSession에 적용할 월드 트래킹 설정
     let configuration = ARWorldTrackingConfiguration()
+    
+    //MARK: - SceneKit
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        
+        guard let nodeNameA = contact.nodeA.name else { return }
+        guard let nodeNameB = contact.nodeB.name else { return }
+        
+        var arrowJarContactNode: SCNNode?
+        
+        if nodeNameA == "underJar" && nodeNameB == "arrow" {
+            arrowJarContactNode = contact.nodeA
+        } else if nodeNameB == "arrow" && nodeNameA == "underJar" {
+            arrowJarContactNode = contact.nodeB
+        }
+        
+        if let arrowNode = arrowJarContactNode {
+            arrowNode.runAction(
+                SCNAction.run({ node in
+                    print("충돌")
+                })
+            )
+        }
+    }
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -53,11 +81,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         let tapGestureRecognizer = UITapGestureRecognizer()
         tapGestureRecognizer.delegate = self
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
-
+        
         self.view.addSubview(sceneView)
         sceneView.scene.rootNode.addChildNode(jar)
         sceneView.scene.rootNode.addChildNode(underJar)
-       
+        
         // Layout
         NSLayoutConstraint.activate([
             sceneView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -96,12 +124,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     // 항아리 만들기
     func makeJar() -> SCNNode {
         let jarNode = SCNNode()
-
+        
         let outMaterial = SCNMaterial()
         let inMaterial = SCNMaterial()
         
         let jarOut = SCNTube(innerRadius: 0.08, outerRadius: 0.10, height: 0.25)
         
+        // 튜브 중앙 뚫리는 옵션
         let shape = SCNPhysicsShape(geometry: jarOut,
                                     options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron])
         
@@ -113,6 +142,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         outMaterial.diffuse.contents = UIImage(named: "TreeTexture")
         inMaterial.diffuse.contents = UIImage(named: "InnerTreeTexture")
         
+        jarNode.name = "jar"
         jarNode.physicsBody = jarPhysicsBody
         jarNode.geometry = jarOut
         jarNode.geometry?.materials = [outMaterial, inMaterial]
@@ -131,12 +161,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         let jarPhysicsBody = SCNPhysicsBody(
             type: .static,
-            shape: SCNPhysicsShape(geometry: SCNCylinder(radius: 0.08, height: 0.05))
+            shape: SCNPhysicsShape(geometry: jarUnder )
         )
         
         underMaterial.diffuse.contents = UIImage(named: "UnderTreeTexture")
         
+        underJarNode.name = "underJar"
         underJarNode.physicsBody = jarPhysicsBody
+        underJarNode.physicsBody?.categoryBitMask = jarCategory
         underJarNode.geometry = jarUnder
         underJarNode.geometry?.materials = [underMaterial]
         underJarNode.position = SCNVector3(0, -1.05, -1)
@@ -155,7 +187,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         let arrowPhysicsBody = SCNPhysicsBody(
             type: .dynamic,
-            shape: SCNPhysicsShape(geometry: SCNCylinder(radius: 0.01, height: 0.3))
+            shape: SCNPhysicsShape(geometry: arrow)
         )
         
         material.diffuse.contents = UIColor.red
@@ -166,10 +198,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         arrowPhysicsBody.mass = 1
         arrowPhysicsBody.friction = 2
         arrowPhysicsBody.contactTestBitMask = 1
-
+        
+        arrowNode.name = "arrow"
         arrowNode.physicsBody = arrowPhysicsBody
+        arrowNode.physicsBody?.categoryBitMask = arrowCategory
+        arrowNode.physicsBody?.collisionBitMask = arrowCategory | jarCategory
+        arrowNode.physicsBody?.contactTestBitMask = arrowCategory | jarCategory
         arrowNode.position = SCNVector3(0, 0, -1)
-      
+        
         // 2
         //currentBallNode = ballNode
         return arrowNode
@@ -181,6 +217,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         sceneView.scene.rootNode.addChildNode(arrow)
         return true
     }
-   
+    
+    //MARK: - Collision
+    
+    
 }
 

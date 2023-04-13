@@ -3,4 +3,195 @@
    uuid = "C0124325-3091-42AE-92CE-0500B3267545"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8430F46B-52AC-4F76-81B7-7479540D251A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "physicsWorld(_:didBegin:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8430F46B-52AC-4F76-81B7-7479540D251A - 941082ed93cdbbd9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftStudentChallenge2023.ARViewController.physicsWorld(_: __C.SCNPhysicsWorld, didBegin: __C.SCNPhysicsContact) -&gt; ()"
+                  moduleName = "SwiftStudentChallenge2023"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kangmingyu/Desktop/SwiftStudentChallenge2023/SwiftStudentChallenge2023.swiftpm/ARViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "564">
+               </Location>
+               <Location
+                  uuid = "8430F46B-52AC-4F76-81B7-7479540D251A - 941082ed93cdbbba"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftStudentChallenge2023.ARViewController.physicsWorld(_: __C.SCNPhysicsWorld, didBegin: __C.SCNPhysicsContact) -&gt; ()"
+                  moduleName = "SwiftStudentChallenge2023"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kangmingyu/Desktop/SwiftStudentChallenge2023/SwiftStudentChallenge2023.swiftpm/ARViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "316">
+               </Location>
+               <Location
+                  uuid = "8430F46B-52AC-4F76-81B7-7479540D251A - 941082ed93cdbbba"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftStudentChallenge2023.ARViewController.physicsWorld(_: __C.SCNPhysicsWorld, didBegin: __C.SCNPhysicsContact) -&gt; ()"
+                  moduleName = "SwiftStudentChallenge2023"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kangmingyu/Desktop/SwiftStudentChallenge2023/SwiftStudentChallenge2023.swiftpm/ARViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "396">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68315CEE-C217-4968-9CAE-DFBC1C64FEF2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "physicsWorld(_:didBegin:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "68315CEE-C217-4968-9CAE-DFBC1C64FEF2 - 941082ed93cdbb9b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftStudentChallenge2023.ARViewController.physicsWorld(_: __C.SCNPhysicsWorld, didBegin: __C.SCNPhysicsContact) -&gt; ()"
+                  moduleName = "SwiftStudentChallenge2023"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kangmingyu/Desktop/SwiftStudentChallenge2023/SwiftStudentChallenge2023.swiftpm/ARViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "332">
+               </Location>
+               <Location
+                  uuid = "68315CEE-C217-4968-9CAE-DFBC1C64FEF2 - 941082ed93cdbb9b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftStudentChallenge2023.ARViewController.physicsWorld(_: __C.SCNPhysicsWorld, didBegin: __C.SCNPhysicsContact) -&gt; ()"
+                  moduleName = "SwiftStudentChallenge2023"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kangmingyu/Desktop/SwiftStudentChallenge2023/SwiftStudentChallenge2023.swiftpm/ARViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "68315CEE-C217-4968-9CAE-DFBC1C64FEF2 - 941082ed93cdbb9b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftStudentChallenge2023.ARViewController.physicsWorld(_: __C.SCNPhysicsWorld, didBegin: __C.SCNPhysicsContact) -&gt; ()"
+                  moduleName = "SwiftStudentChallenge2023"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kangmingyu/Desktop/SwiftStudentChallenge2023/SwiftStudentChallenge2023.swiftpm/ARViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "68315CEE-C217-4968-9CAE-DFBC1C64FEF2 - 941082ed93cdbb9b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftStudentChallenge2023.ARViewController.physicsWorld(_: __C.SCNPhysicsWorld, didBegin: __C.SCNPhysicsContact) -&gt; ()"
+                  moduleName = "SwiftStudentChallenge2023"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kangmingyu/Desktop/SwiftStudentChallenge2023/SwiftStudentChallenge2023.swiftpm/ARViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "160">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0832C7CC-30DC-4F41-BFE7-F4545DC3E292"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "physicsWorld(_:didBegin:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0832C7CC-30DC-4F41-BFE7-F4545DC3E292 - 941082ed93cdbb9b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftStudentChallenge2023.ARViewController.physicsWorld(_: __C.SCNPhysicsWorld, didBegin: __C.SCNPhysicsContact) -&gt; ()"
+                  moduleName = "SwiftStudentChallenge2023"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kangmingyu/Desktop/SwiftStudentChallenge2023/SwiftStudentChallenge2023.swiftpm/ARViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "0832C7CC-30DC-4F41-BFE7-F4545DC3E292 - 941082ed93cdbb9b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftStudentChallenge2023.ARViewController.physicsWorld(_: __C.SCNPhysicsWorld, didBegin: __C.SCNPhysicsContact) -&gt; ()"
+                  moduleName = "SwiftStudentChallenge2023"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kangmingyu/Desktop/SwiftStudentChallenge2023/SwiftStudentChallenge2023.swiftpm/ARViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "160">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
