@@ -51,18 +51,16 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         guard let nodeNameA = contact.nodeA.name else { return }
         guard let nodeNameB = contact.nodeB.name else { return }
         
-        var jarContactNode: SCNNode?
         var arrowContactNode: SCNNode?
         
         if nodeNameA == "underJar" && nodeNameB == "arrow" {
-            jarContactNode = contact.nodeA
             arrowContactNode = contact.nodeB
         }
                 
         if let arrowNode = arrowContactNode {
             arrowNode.runAction(
                 SCNAction.run({ node in
-                    print("arrow",node)
+                    self.score += 1
                     
                     node.isPaused = true
                 })
