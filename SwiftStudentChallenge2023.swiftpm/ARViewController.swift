@@ -45,6 +45,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     // ARSession에 적용할 월드 트래킹 설정
     let configuration = ARWorldTrackingConfiguration()
     
+    var camSCNVector: SCNVector3?
+    var impurse: SCNVector3?
+    
     //MARK: - SceneKit
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         
@@ -68,6 +71,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         }
     }
     
+    //MARK: - ARKit
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        let camPosition = frame.camera.transform.columns.3
+        camSCNVector = SCNVector3(camPosition.x, camPosition.y, camPosition.z)
+        camSCNVector = SCNVector3(0, 0, -camPosition.z)
+    }
+
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -182,17 +192,19 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         let material = SCNMaterial()
         
-        let arrow = SCNCylinder(radius: 0.01, height: 0.3)
+        let arrow = SCNCylinder(radius: 0.005 , height: 0.3)
         
         let arrowPhysicsBody = SCNPhysicsBody(
             type: .dynamic,
             shape: SCNPhysicsShape(geometry: arrow)
         )
         
-        material.diffuse.contents = UIColor.red
+        material.diffuse.contents = UIImage(named: "arrowTexture")
         
         arrowNode.geometry = arrow
         arrowNode.geometry?.materials = [material]
+        arrowNode.eulerAngles = SCNVector3Make(.pi/2, 0, .pi/2);
+
         
         arrowPhysicsBody.mass = 1
         arrowPhysicsBody.friction = 2
@@ -203,8 +215,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         arrowNode.physicsBody?.categoryBitMask = arrowCategory
         arrowNode.physicsBody?.collisionBitMask = arrowCategory | jarCategory
         arrowNode.physicsBody?.contactTestBitMask = arrowCategory | jarCategory
-        arrowNode.position = SCNVector3(0, 0, -1)
         
+        arrowNode.position = camSCNVector ?? SCNVector3(x: 0, y: 0, z: 0)
+        
+        arrowNode.physicsBody?.applyForce(camSCNVector ?? SCNVector3(x: 0, y: 0, z: 1), asImpulse: true)
         // 2
         //currentBallNode = ballNode
         return arrowNode
