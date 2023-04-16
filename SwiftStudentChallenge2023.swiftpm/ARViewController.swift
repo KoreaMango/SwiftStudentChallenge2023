@@ -198,7 +198,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         let material = SCNMaterial()
         
-        let arrow = SCNCylinder(radius: 0.005 , height: 0.3)
+        let arrow = SCNCylinder(radius: 0.01 , height: 0.3)
         
         let arrowPhysicsBody = SCNPhysicsBody(
             type: .dynamic,
@@ -225,7 +225,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         arrowNode.position = camSCNVector
         
-        let force = SCNVector3(arrowNode.worldFront.x, arrowNode.worldFront.y-1, arrowNode.worldFront.z - 2)
+        let force = SCNVector3(arrowNode.simdWorldFront.x * 3, arrowNode.simdWorldFront.y * 0.5, arrowNode.simdWorldFront.z * 3)
         
         arrowNode.physicsBody?.applyForce(force, asImpulse: true)
         

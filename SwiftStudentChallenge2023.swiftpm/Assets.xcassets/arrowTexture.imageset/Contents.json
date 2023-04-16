@@ -1,8 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "top-view-tree-bark.jpeg",
-      "idiom" : "universal"
+      "filename" : "oak-wooden-textured-design-background.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
