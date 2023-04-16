@@ -75,7 +75,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         let camPosition = frame.camera.transform.columns.3
         camSCNVector = SCNVector3(camPosition.x, camPosition.y, camPosition.z)
-        camSCNVector = SCNVector3(0, 0, -camPosition.z)
+        
     }
 
     //MARK: - Life Cycle
@@ -203,6 +203,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         arrowNode.geometry = arrow
         arrowNode.geometry?.materials = [material]
+        
         arrowNode.eulerAngles = SCNVector3Make(.pi/2, 0, .pi/2);
 
         
@@ -218,7 +219,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         arrowNode.position = camSCNVector ?? SCNVector3(x: 0, y: 0, z: 0)
         
-        arrowNode.physicsBody?.applyForce(camSCNVector ?? SCNVector3(x: 0, y: 0, z: 1), asImpulse: true)
+        arrowNode.physicsBody?.applyForce(camSCNVector ?? SCNVector3(x: 0, y: 0, z: 10), asImpulse: true)
         // 2
         //currentBallNode = ballNode
         return arrowNode
