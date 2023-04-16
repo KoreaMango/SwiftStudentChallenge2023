@@ -46,7 +46,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     let configuration = ARWorldTrackingConfiguration()
     
     var camSCNVector: SCNVector3?
-    var impurse: SCNVector3?
     var myCamera: ARCamera?
     
     //MARK: - SceneKit
@@ -193,6 +192,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     func makeArrow() -> SCNNode {
         guard let myCamera = myCamera else { return SCNNode() }
         guard let camSCNVector = camSCNVector else { return SCNNode() }
+
         // 1
         let arrowNode = SCNNode()
         
@@ -210,12 +210,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         arrowNode.geometry = arrow
         arrowNode.geometry?.materials = [material]
         
-        arrowNode.eulerAngles = SCNVector3Make(.pi/2 + myCamera.eulerAngles.x, 0 +  myCamera.eulerAngles.y, .pi/2 +  myCamera.eulerAngles.z)
+        
+        let angle = SCNVector3Make(.pi/2 + myCamera.eulerAngles.x, 0 +  myCamera.eulerAngles.y, .pi/2 +  myCamera.eulerAngles.z)
+        arrowNode.eulerAngles = angle
 
         
         arrowPhysicsBody.mass = 1
-        arrowPhysicsBody.friction = 2
-        arrowPhysicsBody.contactTestBitMask = 1
         
         arrowNode.name = "arrow"
         arrowNode.physicsBody = arrowPhysicsBody
@@ -225,9 +225,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         arrowNode.position = camSCNVector
         
-        arrowNode.physicsBody?.applyForce(camSCNVector, asImpulse: true)
-        // 2
-        //currentBallNode = ballNode
+        let force = SCNVector3(arrowNode.worldFront.x, arrowNode.worldFront.y-1, arrowNode.worldFront.z - 2)
+        
+        arrowNode.physicsBody?.applyForce(force, asImpulse: true)
+        
         return arrowNode
     }
     
