@@ -77,7 +77,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         let camPosition = cam.transform.columns.3
         
         myCamera = cam
-        camSCNVector = SCNVector3(camPosition.x, camPosition.y, camPosition.z)
+        camSCNVector = SCNVector3(camPosition.x, camPosition.y + 0.05, camPosition.z)
         
     }
 
@@ -140,7 +140,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         let outMaterial = SCNMaterial()
         let inMaterial = SCNMaterial()
         
-        let jarOut = SCNTube(innerRadius: 0.08, outerRadius: 0.10, height: 0.25)
+        let jarOut = SCNTube(innerRadius: 0.16, outerRadius: 0.20, height: 0.50)
         
         // 튜브 중앙 뚫리는 옵션
         let shape = SCNPhysicsShape(geometry: jarOut,
@@ -158,7 +158,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         jarNode.physicsBody = jarPhysicsBody
         jarNode.geometry = jarOut
         jarNode.geometry?.materials = [outMaterial, inMaterial]
-        jarNode.position = SCNVector3(0, -1, -1)
+        jarNode.position = SCNVector3(0, -2, -2)
         
         return jarNode
     }
@@ -169,7 +169,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         let underMaterial = SCNMaterial()
         
-        let jarUnder = SCNCylinder(radius: 0.08, height: 0.05)
+        let jarUnder = SCNCylinder(radius: 0.16, height: 0.05)
         
         let jarPhysicsBody = SCNPhysicsBody(
             type: .static,
@@ -183,7 +183,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         underJarNode.physicsBody?.categoryBitMask = jarCategory
         underJarNode.geometry = jarUnder
         underJarNode.geometry?.materials = [underMaterial]
-        underJarNode.position = SCNVector3(0, -1.05, -1)
+        underJarNode.position = SCNVector3(0, -2.05, -2)
         
         return underJarNode
     }
@@ -192,13 +192,17 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     func makeArrow() -> SCNNode {
         guard let myCamera = myCamera else { return SCNNode() }
         guard let camSCNVector = camSCNVector else { return SCNNode() }
+        guard let pointOfView = sceneView.pointOfView else {
+            print("Error")
+            return SCNNode()
+        }
 
         // 1
         let arrowNode = SCNNode()
         
         let material = SCNMaterial()
         
-        let arrow = SCNCylinder(radius: 0.01 , height: 0.3)
+        let arrow = SCNCylinder(radius: 0.015 , height: 0.8)
         
         let arrowPhysicsBody = SCNPhysicsBody(
             type: .dynamic,
@@ -211,10 +215,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         arrowNode.geometry?.materials = [material]
         
         
-        let angle = SCNVector3Make(.pi/2 + myCamera.eulerAngles.x, 0 +  myCamera.eulerAngles.y, .pi/2 +  myCamera.eulerAngles.z)
+        let angle = SCNVector3Make(.pi/3 + myCamera.eulerAngles.x, 0 +  myCamera.eulerAngles.y, .pi/2 +  myCamera.eulerAngles.z)
         arrowNode.eulerAngles = angle
-
-        
         arrowPhysicsBody.mass = 1
         
         arrowNode.name = "arrow"
@@ -225,7 +227,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         arrowNode.position = camSCNVector
         
-        let force = SCNVector3(arrowNode.simdWorldFront.x * 3, arrowNode.simdWorldFront.y * 0.5, arrowNode.simdWorldFront.z * 3)
+        let force = SCNVector3(pointOfView.simdWorldFront.x * 4
+                               ,pointOfView.simdWorldFront.y * 4
+                               ,pointOfView.simdWorldFront.z * 4)
+
         
         arrowNode.physicsBody?.applyForce(force, asImpulse: true)
         
