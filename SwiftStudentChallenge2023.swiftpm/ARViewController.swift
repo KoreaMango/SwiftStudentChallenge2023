@@ -27,6 +27,15 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         return scene
     }()
     
+    // 투호 개수
+    private var count: Int = 10 {
+        didSet {
+            DispatchQueue.main.async { [unowned self] in
+                self.countLabel.text = "\(self.count)"
+            }
+        }
+    }
+    
     // 투호 점수
     private var score: UInt = 0 {
         didSet {
@@ -41,6 +50,18 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
                                                    y: UIScreen.main.bounds.height / 8,
                                                    width: UIScreen.main.bounds.width,
                                                    height: 100))
+    
+    // 카운트 Label
+    private let countLabel = UILabel(frame: CGRect(x: 20,
+                                                   y: 100,
+                                                   width: UIScreen.main.bounds.width,
+                                                   height: 40))
+    
+    // 남은 화살 카운트 Label
+    private let countTextLabel = UILabel(frame: CGRect(x: 20,
+                                                   y: 60,
+                                                   width: UIScreen.main.bounds.width,
+                                                   height: 40))
     
     // ARSession에 적용할 월드 트래킹 설정
     let configuration = ARWorldTrackingConfiguration()
@@ -123,12 +144,29 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         // config 적용후 실행
         sceneView.session.run(configuration)
         
+        // 점수 Label 설정
         score = 0
         scoreLabel.font = UIFont(name: "HelveticaNeue", size: 100.0)
         scoreLabel.textColor = .white
         scoreLabel.textAlignment = .center
         
         sceneView.addSubview(scoreLabel)
+        
+        // 카운트 Label 설정
+        count = 10
+        countLabel.font = UIFont(name: "HelveticaNeue", size: 40.0)
+        countLabel.textColor = .white
+        countLabel.textAlignment = .left
+        
+        sceneView.addSubview(countLabel)
+        
+        // 카운트 설명 Label
+        countTextLabel.text = "arrows left"
+        countTextLabel.font = UIFont(name: "HelveticaNeue", size: 20.0)
+        countTextLabel.textColor = .white
+        countTextLabel.textAlignment = .left
+        
+        sceneView.addSubview(countTextLabel)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -238,6 +276,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         arrowNode.physicsBody?.applyForce(force, asImpulse: true)
         
         soundManager.playThrowSound()
+        count -= 1
         
         return arrowNode
     }
