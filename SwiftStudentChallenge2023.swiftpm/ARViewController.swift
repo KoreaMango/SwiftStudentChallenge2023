@@ -48,6 +48,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     var camSCNVector: SCNVector3?
     var myCamera: ARCamera?
     
+    // AudioPlayer
+    let soundManager = SoundManager()
+    
     //MARK: - SceneKit
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         
@@ -234,6 +237,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         
         arrowNode.physicsBody?.applyForce(force, asImpulse: true)
         
+        soundManager.playThrowSound()
+        
         return arrowNode
     }
     
@@ -243,9 +248,5 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         sceneView.scene.rootNode.addChildNode(arrow)
         return true
     }
-    
-    //MARK: - Collision
-    
-    
 }
 
