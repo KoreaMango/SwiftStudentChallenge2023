@@ -30,6 +30,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     // 투호 개수
     private var count: Int = 10 {
         didSet {
+            if count == 0 {
+                isFinish = true
+            }
             DispatchQueue.main.async { [unowned self] in
                 self.countLabel.text = "\(self.count)"
             }
@@ -44,6 +47,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
             }
         }
     }
+    
+    // 종료 관찰 변수
+    private var isFinish: Bool = false
     
     // 점수 Label
     private let scoreLabel = UILabel(frame: CGRect(x: 0,
@@ -62,6 +68,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
                                                    y: 60,
                                                    width: UIScreen.main.bounds.width - 20,
                                                    height: 40))
+    
+    // 재시작 Label
+    private let restartLabel = UILabel(frame: CGRect(x: 0,
+                                                     y: 0,
+                                                     width: UIScreen.main.bounds.width,
+                                                     height: UIScreen.main.bounds.height))
     
     // ARSession에 적용할 월드 트래킹 설정
     let configuration = ARWorldTrackingConfiguration()
@@ -92,23 +104,58 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         }
     }
     
-    //MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func initWorld() {
         // Make Jar Object
         let jar = NodeMaker.makeJar()
         let underJar = NodeMaker.makeUnderJar()
+        
+        // SceneView
+        self.view.addSubview(sceneView)
+        sceneView.scene.rootNode.addChildNode(jar)
+        sceneView.scene.rootNode.addChildNode(underJar)
         
         // Tap Recognizer
         let tapGestureRecognizer = UITapGestureRecognizer()
         tapGestureRecognizer.delegate = self
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
         
-        // SceneView
-        self.view.addSubview(sceneView)
-        sceneView.scene.rootNode.addChildNode(jar)
-        sceneView.scene.rootNode.addChildNode(underJar)
+        // configuration 세부 설정
+        configuration.planeDetection = .horizontal
+        configuration.isLightEstimationEnabled = true
+        
+        // config 적용후 실행
+        sceneView.session.run(configuration)
+    }
+    
+    func reset() {
+        sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+            if node.name == "arrow" {
+                node.removeFromParentNode()
+            }
+        }
+        count = 10
+        score = 0
+        
+        restartLabel.isHidden = false
+        restartLabel.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+    }
+    
+    func restart() {
+        restartLabel.isHidden = true
+        restartLabel.backgroundColor = nil
+        isFinish = false
+    }
+    
+    //MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+  
+        // 초기화
+        initWorld()
         
         // Layout
         NSLayoutConstraint.activate([
@@ -121,19 +168,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         view.subviews.forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        // configuration 세부 설정
-        configuration.planeDetection = .horizontal
-        configuration.isLightEstimationEnabled = true
-        
-        // config 적용후 실행
-        sceneView.session.run(configuration)
-        
-        
+
         // 외곽선
         let attrString = NSAttributedString(
             string: "외곽선 라벨",
@@ -169,16 +205,37 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         countTextLabel.textAlignment = .right
         
         sceneView.addSubview(countTextLabel)
+        
+        // Restart Label
+        restartLabel.text = "Again?"
+        restartLabel.textColor = .white
+        restartLabel.font = UIFont(name: "HelveticaNeue", size: 40.0)
+        restartLabel.textAlignment = .center
+        restartLabel.isHidden = true
+        
+        sceneView.addSubview(restartLabel)
     }
 
     
     // MARK: - Tap Action
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        let arrow = NodeMaker.makeArrow(sceneView: sceneView)
-        sceneView.scene.rootNode.addChildNode(arrow)
-        soundManager.playThrowSound()
-        count -= 1
-        return true
+        print(isFinish)
+        if isFinish {
+            if count == 10 {
+                restart()
+            }
+            else {
+                reset()
+            }
+            return false
+        }
+        else {
+            let arrow = NodeMaker.makeArrow(sceneView: sceneView)
+            sceneView.scene.rootNode.addChildNode(arrow)
+            soundManager.playThrowSound()
+            count -= 1
+            return true
+        }
     }
 }
 
