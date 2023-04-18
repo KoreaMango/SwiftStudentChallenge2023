@@ -157,8 +157,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "86"
             endingLineNumber = "86"
-            landmarkName = "SceneKit"
-            landmarkType = "19">
+            landmarkName = "physicsWorld(_:didBegin:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "0832C7CC-30DC-4F41-BFE7-F4545DC3E292 - 941082ed93cdbb9b"

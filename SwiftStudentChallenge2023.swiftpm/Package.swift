@@ -8,19 +8,19 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "SwiftStudentChallenge2023",
+    name: "TuhoGame",
     platforms: [
         .iOS("15.2")
     ],
     products: [
         .iOSApplication(
-            name: "SwiftStudentChallenge2023",
+            name: "TuhoGame",
             targets: ["AppModule"],
             bundleIdentifier: "com.ognam.SwiftStudentChallenge2023",
             teamIdentifier: "TDUR55YWW6",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .pencil),
+            appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.yellow),
             supportedDeviceFamilies: [
                 .pad,
@@ -34,7 +34,8 @@ let package = Package(
             ],
             capabilities: [
                 .camera(purposeString: "Camera access")
-            ]
+            ],
+            appCategory: .games
         )
     ],
     targets: [
